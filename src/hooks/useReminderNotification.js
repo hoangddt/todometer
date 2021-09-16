@@ -23,7 +23,12 @@ function getTimeCondition(nd) {
 }
 
 export default function useReminderNotification() {
-  const { pending, paused } = useItems();
+  const { doing, pending, paused } = useItems();
+  let currentDoing = null;
+  if (doing.length) {
+    let first = doing[0];
+    currentDoing = first.text;
+  } 
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -31,14 +36,15 @@ export default function useReminderNotification() {
 
       // sends a notification if reminder notifications are enabled,
       // and todos are not completed
-      if (getTimeCondition(nd) && (pending.length > 0 || paused.length > 0)) {
-        let text = `Don't forget, you have ${pending.length +
-          paused.length} tasks to do today (${pending.length} incomplete, ${
+      if (getTimeCondition(nd) && (doing.length > 0 || pending.length > 0 || paused.length > 0)) {
+        let totalRemaining = pending.length + paused.length
+        let doingReminder = doing.length > 0 ? `You need to complete "${currentDoing}" and then do ${totalRemaining} remaining tasks` : "";
+        let defaultText = `Don't forget, you have ${totalRemaining} tasks to do today (${pending.length} incomplete, ${
           paused.length
         } paused for later)`;
-
+        let textInUse = doing.length > 0 ? doingReminder : defaultText;
         new Notification("todometer reminder!", {
-          body: text
+          body: textInUse
         });
       }
     }, 1000);

@@ -18,12 +18,19 @@ import alldone from "../img/alldone.svg";
 // List of todo items
 function ItemList() {
   const dispatch = useAppReducer();
-  const { pending, paused, completed } = useItems();
+  const { doing, pending, paused, completed } = useItems();
 
   return (
     <div className="item-list">
       <Progress />
       <AddItemForm />
+      {doing.length > 0 && (
+        <>
+          {doing.map(item => {
+            return <Item item={item} key={item.key} />;
+          })}
+        </>
+      )}
       {pending.length > 0 ? (
         <>
           {pending.map(item => {

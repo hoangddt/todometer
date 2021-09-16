@@ -1,5 +1,9 @@
 @import "../styles/variables";
 
+.itemHightlight {
+  background: #8a8a1a !important;
+}
+
 .item {
   display: flex;
   align-items: center;
@@ -17,7 +21,7 @@
     margin: 20px auto;
   }
   .itemName {
-    width: calc(100% - 110px);
+    width: calc(100% - 130px);
     overflow: auto;
 
     &::-webkit-scrollbar {
@@ -40,7 +44,7 @@
   .buttons {
     display: flex;
     justify-content: space-between;
-    width: 100px;
+    width: 120px;
 
     &.completedButtons {
       justify-content: flex-end;
@@ -74,6 +78,20 @@
       &.complete {
         width: 30px;
         background: no-repeat url("../img/check.svg");
+        &:after {
+          background: $green;
+        }
+      }
+      &.doing {
+        width: 30px;
+        background: no-repeat url("../img/right-arrow.svg");
+        &:after {
+          background: $green;
+        }
+      }
+      &.down {
+        width: 30px;
+        background: no-repeat url("../img/down-arrow.svg");
         &:after {
           background: $green;
         }

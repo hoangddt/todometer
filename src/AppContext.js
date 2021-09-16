@@ -15,11 +15,12 @@ export function useAppReducer() {
 export function useItems() {
   const { items } = useAppState();
 
+  const doing = items.filter(item => item.status === "doing");
   const pending = items.filter(item => item.status === "pending");
   const paused = items.filter(item => item.status === "paused");
   const completed = items.filter(item => item.status === "completed");
 
-  return { pending, paused, completed };
+  return { doing, pending, paused, completed };
 }
 
 const appStateReducer = (state, action) => {
